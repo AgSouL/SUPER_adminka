@@ -93,6 +93,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Confim";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ChangeUserPass
             // 
@@ -109,6 +110,8 @@
             this.Controls.Add(this.textBox1);
             this.Name = "ChangeUserPass";
             this.Text = "ChangeUserPass";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChangeUserPass_FormClosed);
+            this.Load += new System.EventHandler(this.ChangeUserPass_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

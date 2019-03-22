@@ -83,9 +83,9 @@ namespace WindowsFormsApp2
         {
             Prices current = comboBox1.SelectedItem as Prices;
             int cnt = comboBox2.SelectedIndex;
-            if (cnt == -1) cnt =1;
-            total = current.price* cnt;
-            if(checkBox1.Checked)
+            if (cnt == -1) cnt = 1;
+            total = current.price * cnt;
+            if (checkBox1.Checked)
             {
                 total = total + 35;
             }
@@ -112,6 +112,38 @@ namespace WindowsFormsApp2
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             calculate();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO orders (userid, date, type, counter, delivery, confirmed, total)" +
+                " VALUES (@userid, @date, @type, @counter, @delivery, @confirmed, @total)", connection);
+            cmd.Parameters.AddWithValue("@userid", this.userid);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd h:m:s"));
+            Prices current = comboBox1.SelectedItem as Prices;
+            cmd.Parameters.AddWithValue("@type", current.id);
+            int cnt = comboBox2.SelectedIndex;
+            cmd.Parameters.AddWithValue("@counter", cnt);
+            cmd.Parameters.AddWithValue("@delivery", 250);
+            cmd.Parameters.AddWithValue("@confirmed", 0);
+            cmd.Parameters.AddWithValue("@total", total);
+            int regged = Convert.ToInt32(cmd.ExecuteNonQuery());
+            connection.Close();
+            MessageBox.Show("Your orders booked sucesful!");
+            RefreshGrid();
+        }
+
+        private void Orders_List_FormClosed(Object sender, FormClosedEventArgs e)
+        {
+            authform.Show();
+        }
+
+
+        private void rePassToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeUserPass changeuserpassword = new ChangeUserPass(this, userid);
+            changeuserpassword.Show();
+            this.Hide();
         }
     }
 }

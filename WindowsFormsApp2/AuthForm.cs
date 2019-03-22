@@ -92,5 +92,10 @@ namespace WindowsFormsApp2
             //Закрываем текущую форму
             this.Hide();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
